@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<title>Main - HomeView</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+.w3-quarter img{margin-bottom: -6px; cursor: pointer}
+.w3-quarter img:hover{opacity: 0.6; transition: 0.3s}
+.w3-center img:hover{opacity: 0.6; transition: 0.3s}
+</style>
+<body class="w3-light-grey">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-bar-block w3-black w3-animate-right w3-top w3-text-light-grey w3-large" style="z-index:3;width:250px;font-weight:bold;display:none;right:0;" id="mySidebar">
+  <a href="javascript:void()" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-32">CLOSE</a> 
+  <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-16">MAIN PAGE</a> 
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-center w3-white w3-xlarge w3-padding-16">
+  <span class="w3-left w3-padding">HomeView</span>
+  <a href="javascript:void(0)" class="w3-right w3-button w3-white" onclick="w3_open()">☰</a>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+<!--
+<head>
+</head> -->
+
+<div class="w3-main w3-content" style="max-width:1600px;margin-top:25px">
+  <div class="w3-center">
+
+<h1> Welcome To Home View </h1>
+<body>
+
+<h2> About The Project </h2>
+  <p>
+    This purpose of this project is to use modern artifical intelligence techniques to make your home safer.<br/>
+    This is done by leveraging Clarifai's awesome API to get quick access to a pretrained neural network for computer vision use.<br/>
+    <br>
+    Currently, we have two demos: Intruder Safety and Baby Safety
+  </p>
+  <img src="static/block_diagram.png" width="600" height="400" onclick="onClick(this)">
+
+  <h3> Intruder Safety </h3>
+  <p>The intruder alert demo takes in an image and alerts the account-holder if only unknown people are in the picture.
+    To do this, it utilizes Clarifai's face-embedding API. <br/>
+    Using cosine similarity, the vector representing at least one of the faces in the taken image must match a face we have stored as occupants of the house.</p>
+  <h3> Baby Safety </h3>
+
+  <p>This demo detects if a baby leaves their crib or if they are near a dangerous object and will send SMS if the baby is in danger.</p>
+
+  <p>The baby monitor demo runs through a feed of video of two toddlers escaping from their crib. Using Clarifai's general image model, <br/>
+     we ensure that your baby remains in its crib and text you if they escape or are in dangerous situations, i.e. around fire or knives.</p>
+
+
+  
+
+  </div>
+  <!-- select option --> 
+  <div class="w3-container w3-dark-grey w3-text-light-grey w3-padding-32" id="about">
+  <h2> Select Desired Demo</h2>
+  
+  <form  method="POST">
+    {# This hidden_tag is a CSRF security feature. #}
+    {{ demo_form.hidden_tag() }}
+    {{ demo_form.demo_selection.label}}<br>{{demo_form.demo_selection}}
+    <br>
+      {{ demo_form.submit() }}
+  </form>
+    <br>
+  <button onclick="goBack()">Go Back</button>
+  </div>
+
+
+
+  <!-- Pagination -->
+  <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+    <span class="w3-button w3-black w3-xlarge w3-display-topright">×</span>
+    <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+      <img id="img01" class="w3-image">
+      
+    </div>
+  </div>
+
+
+  
+  <script>
+
+    // Script to open and close sidebar
+    function w3_open() {
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("myOverlay").style.display = "block";
+    }
+
+    function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("myOverlay").style.display = "none";
+    }
+    // Modal Image Gallery
+    function onClick(element) {
+    document.getElementById("img01").src = element.src;
+    document.getElementById("modal01").style.display = "block";
+    var captionText = document.getElementById("caption");
+    captionText.innerHTML = element.alt;
+}
+  function goBack() {
+      window.history.back();
+      location.replace("http://127.0.0.1:5000/");
+  }
+  </script>
+</body>
+</div>
